@@ -1,0 +1,67 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+
+
+	<beans:bean id="logoutSuccessHandler"
+    class="com.sahil.services.implementations.CustomLogoutSuccessHandler">
+    	<beans:property name="useReferer" value="true" />
+	</beans:bean>
+
+
+
+     <http auto-config="true" use-expressions="true">
+	
+	<intercept-url pattern="/" access="permitAll"/>
+	<intercept-url pattern="/resources/**" access="permitAll"/>
+	<intercept-url pattern="/r/emp/forgetPassword" access="permitAll"/>
+	<intercept-url pattern="/r/emp/resetPassword" access="permitAll"/>
+	<intercept-url pattern="/r/emp/changePassword" access="permitAll"/>
+	<intercept-url pattern="/r/emp/savePassword" access="permitAll"/>
+	<intercept-url pattern="/r/register" access="permitAll"/>
+	<intercept-url pattern="/r/registrationConfirm" access="permitAll"/>
+	<intercept-url pattern="/badUser" access="permitAll"/>		
+	<intercept-url pattern="/admin/**" access="permitAll"/>
+	<intercept-url pattern="/customAdmin/**" access="permitAll"/>
+	<intercept-url pattern="/hr/**" access="permitAll"/>
+	<intercept-url pattern="/uploader/api/**" access="permitAll"/>
+	<intercept-url pattern="/leavecount/**" access="permitAll"/>
+	<intercept-url pattern="/tab/**" access="permitAll"/>
+	<intercept-url pattern="/tester/**" access="permitAll"/>
+	
+	
+	<intercept-url pattern="/emp/managerHome" access="hasRole('ROLE_MANAGER')"/>
+	
+	<intercept-url pattern="/**" access="hasRole('ROLE_EMPLOYEE')"/>
+	   
+		<!-- access denied page -->
+		<access-denied-handler error-page="/403" />
+		
+		<form-login 
+		    login-page="/" 
+		    default-target-url="/emp/empHome" 
+			authentication-failure-url="/?error" 
+			username-parameter="username"
+			password-parameter="password" />
+		<logout success-handler-ref="logoutSuccessHandler"
+        invalidate-session="true" delete-cookies="true"/>
+		</http>
+
+
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="logInService">
+        	<password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+      
+   <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+      
+
+
+</beans:beans>

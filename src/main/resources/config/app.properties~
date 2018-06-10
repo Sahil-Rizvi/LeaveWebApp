@@ -1,0 +1,13 @@
+hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+hibernate.ejb.naming_strategy=org.hibernate.cfg.DefaultComponentSafeNamingStrategy
+hibernate.hbm2ddl.auto=create
+hibernate.show_sql=true
+hibernate.format_sql=false
+hibernate.default_batch_fetch_size=5
+hibernate.cache.use_second_level_cache=false
+hibernate.cache.use_query_cache=false
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jndi.databasename=jdbc/leavewebapp
+jdbc.url=jdbc:mysql://localhost:3306/leavewebapp
+jdbc.username=username
+jdbc.password=password
